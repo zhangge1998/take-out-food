@@ -20,6 +20,14 @@ let isExit=(allItems, selectedItems)=> {
       return 1;
     }
   }
-};
+}
+
+let buildNowTotal=(itemTotal)=> {
+  let total = 0;
+  for (let itemTotal1 of itemTotal) {
+    total += itemTotal1.subTotal;
+  }
+  return {list: itemTotal, nowTotal: total};
+}
 
 

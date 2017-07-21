@@ -35,7 +35,7 @@ let buildFinalTotal=(nowTotal)=> {
   let save = sSave(nowTotal);
   let finalTotal = nowTotal.nowTotal - save;
   return {nowTotal: nowTotal, save: save, finalTotal: finalTotal};
-}
+};
 
 let sSave=(nowTotal)=> {
   let promotions = loadPromotions();
@@ -66,7 +66,7 @@ let sSave=(nowTotal)=> {
     }
     return save3;
   }
-}
+};
 
 let isHalfPrice=(nowTotal, promotions)=> {
   for (let item of promotions[1].items) {
@@ -75,6 +75,31 @@ let isHalfPrice=(nowTotal, promotions)=> {
       return 1;
     }
   }
-}
+};
+
+let output=(final)=> {
+  let string = "============= 订餐明细 =============";
+  for (let temp of final.nowTotal.list) {
+    string += "\n" + temp.item.name + " x " + temp.count + " = " + temp.subTotal + "元";
+  }
+  string += "\n-----------------------------------";
+  if (final.nowTotal.type === "指定菜品半价") {
+    string += "\n使用优惠:\n" + final.nowTotal.type + "(";
+    for (var j = 0; j < save.length; j++) {
+      if (j < save.length - 1)
+        string += save[j] + '，';
+      else
+        string += save[j];
+    }
+    string += ")，" + "省" + final.save + "元" + "\n-----------------------------------" + "\n总计：" + final.finalTotal + "元" + "\n===================================";
+  }
+  else if (final.nowTotal.type === "满30减6元，省6元") {
+    string += "\n使用优惠:\n" + final.nowTotal.type + "\n-----------------------------------" + "\n总计：" + final.finalTotal + "元" + "\n===================================";
+  }
+  else {
+    string += "\n总计：" + final.finalTotal + "元" + "\n===================================";
+  }
+  return string;
+};
 
 
